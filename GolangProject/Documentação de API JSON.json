@@ -1,0 +1,755 @@
+swagger: "2.0"
+info:
+  description: "This is an API for the Rappi service and others similar. Here you can request purchases of different products, on different stores, and other users will get them for you and bring them to your home! There is a static delivery price for every delivery so you don't need to worry about calculating prices."
+  version: "1.0.0"
+  title: "Guittuce"
+  termsOfService: "http://guittucerappi.com/terms/"
+  contact:
+    email: "guittuce@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "guittucemenu.swagger.io"
+basePath: "/v2"
+tags:
+- name: "user"
+  description: "Operations about user"
+  externalDocs:
+    description: "Find out more about our app"
+    url: "http://swagger.io"
+- name: "deliveryman"
+  description: "Operations about deliveryman"
+  externalDocs:
+    description: "Find out more about our app"
+    url: "http://swagger.io"
+- name: "cart"
+  description: "Operations about purchases"
+  externalDocs:
+    description: "Find out more about our app"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /users/insertusers:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "This can be done by anyone."
+      operationId: "InsertUser"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "The user that is being created"
+        schema:
+          type: "object"
+          required:
+          - "username"
+          - "firstname"
+          - "lastname"
+          - "password"
+          - "email"
+          - "cellphone"
+          properties:
+            username:
+              type: "string"
+            firstname:
+              type: "string"
+            lastname:
+              type: "string"
+            email:
+              type: "string"
+            password:
+              type: "string"
+            cellphone:
+              type: "string"
+      responses:
+       201:
+          description: "Created Success"
+       400:
+          description: "Required fields missing or there are invalid chars in your fields"
+       410:
+          description: "Missing fields"  
+  /users/userlogin:
+    post:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: "Login the user in the system"
+      operationId: "UserLogin"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Function to log in the user"
+        schema:
+          type: "object"
+          required:
+          - "email"
+          - "password"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        200:
+          description: "success"
+        400:
+          description: "Required fields missing or there are invalid chars in your fields"
+  /users/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /users/findusers:
+    get:
+      tags:
+      - "user"
+      summary: "Get all users"
+      description: ""
+      operationId: "FindAllUsers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "users"
+        in: "path"
+        description: "command to retrieve all users"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Find success"
+        400:
+          description: "Required fields missing or there are invalid chars in your fields"
+        404:
+          description: "Content not found"
+  /users/finduserbyname/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get an especified user"
+      description: "Search for a user by it's username"
+      operationId: "FindUsersByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "command to retrieve a user or users with similar usernames"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Find success"
+        400:
+          description: "Required fields missing or there are invalid chars in your fields"
+        404:
+          description: "Content not found"
+  /users/updateuser:
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "confirmUpdate"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Password of the user being updated"
+        schema:
+          type: "object"
+          required:
+          - "username"
+          - "firstname"
+          - "lastname"
+          - "password"
+          - "email"
+          - "cellphone"
+          properties:
+            username:
+              type: "string"
+            firstname:
+              type: "string"
+            lastname:
+              type: "string"
+            email:
+              type: "string"
+            password:
+              type: "string"
+            cellphone:
+              type: "string"
+      responses:
+        200:
+          description: "Updated"
+        400:
+          description: "Invalid password supplied"
+  /users/deactivateuser:
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "DeactivateUser"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "Email of the user being updated"
+        schema:
+          type: "object"
+          required:
+          - "email"
+          - "password"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        200:
+          description: "Deleted"
+        404:
+          description: "User not found"
+  /deliverymen/insertdeliveryman:
+    post:
+      tags:
+      - "deliveryman"
+      summary: "Create deliveryman"
+      description: "This can be done by anyone."
+      operationId: "InsertDeliveryman"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "deliveryman"
+        description: "The user that is being created"
+        schema:
+          type: "object"
+          required:
+          - "deliveryname"
+          - "firstname"
+          - "lastname"
+          - "password"
+          - "email"
+          - "cellphone"
+          properties:
+            deliveryname:
+              type: "string"
+            firstname:
+              type: "string"
+            lastname:
+              type: "string"
+            email:
+              type: "string"
+            password:
+              type: "string"
+            cellphone:
+              type: "string"
+      responses:
+       201:
+          description: "Created Success"
+       400:
+          description: "Required fields missing or there are invalid chars in your fields"
+       410:
+          description: "Missing fields"  
+  /deliverymen/deliverymanlogin:
+    post:
+      tags:
+      - "deliveryman"
+      summary: "Logs deliveryman into the system"
+      description: ""
+      operationId: "DeliverymanLogin"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "deliveryman"
+        description: "Function to log in the user"
+        schema:
+          type: "object"
+          required:
+          - "email"
+          - "password"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid username/password supplied"
+  /deliverymen/logout:
+    get:
+      tags:
+      - "deliveryman"
+      summary: "Logs out current logged in deliveryman session"
+      description: ""
+      operationId: "logoutDeliveryman"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /deliverymen/finddeliveryman:
+    get:
+      tags:
+      - "deliveryman"
+      summary: "Get all deliverymen"
+      description: ""
+      operationId: "allDeliverymen"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "users"
+        in: "path"
+        description: "command to retrieve all users"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid command"
+        404:
+          description: "No users found"
+  /deliverymen/finddeliverymanbyname/{deliveryname}:
+    get:
+      tags:
+      - "deliveryman"
+      summary: "Get an especified deliveryman by it's deliveryname"
+      description: "Search a deliveryman using the deliverynaem"
+      operationId: "searchDeliveryman"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "deliveryname"
+        in: "path"
+        description: "command to retrieve a deliveryman or deliverymen with similar names"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid coInvalid user supplied"
+        404:
+          description: "No user found"
+  /deliverymen/updatedeliveryman:
+    put:
+      tags:
+      - "deliveryman"
+      summary: "Updated Deliveryman password"
+      description: "This can only be done by the logged in deliveryman."
+      operationId: "UpdatePassword"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "deliveryman"
+        description: "Password of the deliveryman being updated"
+        schema:
+          type: "object"
+          required:
+          - "username"
+          - "firstname"
+          - "lastname"
+          - "password"
+          - "email"
+          - "cellphone"
+          properties:
+            username:
+              type: "string"
+            firstname:
+              type: "string"
+            lastname:
+              type: "string"
+            email:
+              type: "string"
+            password:
+              type: "string"
+            cellphone:
+              type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+        400:
+          description: "Invalid password supplied"
+        404:
+          description: "User not found"
+  /deliverymen/deactivatedeliveryman:
+    delete:
+      tags:
+      - "deliveryman"
+      summary: "Delete user"
+      description: "This can only be done by the logged in deliveryman."
+      operationId: "deleteDeliveryman"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "deliveryman"
+        description: "deliveryman being deactivated"
+        schema:
+          type: "object"
+          required:
+          - "email"
+          - "password"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+  /carts/insertcarts:
+    post:
+      tags:
+      - "cart"
+      summary: "Create new cart"
+      description: "This can be created by an active user"
+      operationId: "Purchase"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "cart"
+        description: "information about the cart"
+        schema:
+          type: "object"
+          required:
+          - "products"
+          - "description"
+          - "limitprice"
+          - "credcard"
+          - "cash"
+          - "username"
+          properties:
+            products:
+             type: "string"
+            description:
+             type: "string"
+            limitprice:
+             type: "number"
+            credcard:
+             type: "boolean"
+            cash:
+             type: "boolean"
+            username:
+             type: "string"
+            open:
+             type: "boolean"
+      responses:
+        200:
+          description: "cart created with success"
+        400:
+          description: "Fields incomplete"
+  /carts/findactivecarts:
+   get:
+      tags:
+      - "cart"
+      summary: "Get all available carts"
+      description: "Get all carts at the moment"
+      operationId: "getAvailableCarts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "open"
+        in: "path"
+        description: "command to retrieve all active carts"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid command"
+        404:
+          description: "No carts found"
+  /carts/findbyproducts/{products}:
+    get:
+      tags:
+      - "cart"
+      summary: "Get an especific cart"
+      description: "Get a cart based on it's requests"
+      operationId: "FindCartsByProduct"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "products"
+        in: "path"
+        description: "command to retrieve a user or users with similar usernames"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Find success"
+        404:
+          description: "Content not found"
+  /carts/{username}/finduserhistorycarts:
+    get:
+      tags:
+      - "cart"
+      summary: "Get all the carts of a user, active or not"
+      description: "Get a cart based on it's user"
+      operationId: "FindUserHistoryCarts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "command to retrieve a user or users with similar usernames"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Find success"
+        400:
+          description: "Required fields missing or there are invalid chars in your fields"
+        404:
+          description: "Content not found" 
+  /cart/updatepurchase:
+    put:
+      tags:
+      - "cart"
+      summary: "Update the final price in the cart and the deliveryman in the purchase"
+      description: "Can only be done by a deliveryman that gets that cart"
+      operationId: "updatePurchase"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "cart"
+        description: "Cart purchase updated"
+        schema:
+          type: "object"
+          required:
+          - "fullprice"
+          - "deliveryname"
+          properties:
+            fullprice:
+             type: "number"
+            deliveryname:
+             type: "string"
+      responses:
+        200:
+          description: "price changed with success"
+          schema:
+            type: "string"
+        400:
+          description: "Fields incomplete"
+  /cart/deletecart:
+    delete:
+      tags:
+      - "cart"
+      summary: "Delete a cart from the open list"
+      description: "This can only be done by the logged user if there is no deliveryman on the cart already"
+      operationId: "DeactivateCart"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "cart"
+        description: "information about the cart being deleted"
+        schema:
+          type: "object"
+          required:
+          - "products"
+          - "description"
+          - "limitprice"
+          - "credcard"
+          - "cash"
+          - "lat"
+          - "lon"
+          - "username"
+          properties:
+           products:
+            type: "string"
+           description:
+            type: "string"
+           limitprice:
+            type: "number"
+           credcard:
+            type: "boolean"
+           cash:
+            type: "boolean"
+           lat:
+            type: "string"
+           lon:
+            type: "string"
+           username:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid data about the cart"
+        404:
+          description: "Cart not found"
+  /cart/delivercart:
+    delete:
+      tags:
+      - "cart"
+      summary: "Delete a cart from the open list"
+      description: "This can only be done by the deliveryman that has the cart"
+      operationId: "DeliverCart"
+      consumes:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "cart"
+        description: "information about the cart being deleted"
+        schema:
+          type: "object"
+          required:
+          - "products"
+          - "description"
+          - "limitprice"
+          - "fullprice"
+          - "credcard"
+          - "cash"
+          - "lat"
+          - "lon"
+          - "username"
+          - "deliveryname"
+          properties:
+           products:
+            type: "string"
+           description:
+            type: "string"
+           limitprice:
+            type: "number"
+           fullprice:
+            type: "number"
+           credcard:
+            type: "boolean"
+           cash:
+            type: "boolean"
+           lat:
+            type: "string"
+           lon:
+            type: "string"
+           username:
+            type: "string"
+           deliveryname:
+            type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid data about the cart"
+        404:
+          description: "Cart not found"        
+securityDefinitions:
+  rappi_auth:
+    type: "oauth2"
+    authorizationUrl: "http://bulletjournal.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:journals: "modify posts in your account"
+      read:journals: "read your posts"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Cart:
+    type: "object"
+    properties:
+      products:
+        type: "string"
+      description:
+        type: "string"
+      limitprice:
+        type: "number"
+      fullprice:
+        type: "number"
+      credcard:
+        type: "boolean"
+      cash:
+        type: "boolean"
+      username:
+        type: "string"
+      deliveryname:
+        type: "string"
+      lat:
+        type: "string"
+      lon:
+        type: "string"
+      open:
+        type: "boolean"
+      deliveryfee:
+        type: "number"
+  User:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      firstname:
+        type: "string"
+      lastname:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      cellphone:
+        type: "string"
+      active:
+        type: "boolean"
+  DeliveryMan:
+    type: "object"
+    properties:
+      deliveryname:
+        type: "string"
+      firstname:
+        type: "string"
+      lastname:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      cellphone:
+        type: "string"
+      active:
+        type: "boolean"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template_login.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <p:panel header="Seja bem vindo">
+            <h:form id="frmInicio">  
+                <p:growl id="msgs" showDetail="true"/>  
+                <p:panelGrid columns="1">                 
+                   <p:menu style="width:270px">
+                       <p:menuitem value="Login" icon="ui-icon-star" url="/faces/Login.xhtml"/>
+                    </p:menu>
+                     <p:menu style="width:270px">
+                        <p:menuitem value="Inscrever-se" icon="ui-icon-star" url="/faces/CadastroUsuario.xhtml"/>
+                    </p:menu>
+                </p:panelGrid>
+              </h:form>
+        </p:panel>
+    </ui:define>   
+</ui:composition>

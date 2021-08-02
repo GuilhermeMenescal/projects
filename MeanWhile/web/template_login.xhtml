@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/MeanWhile/resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link rel="icon" href="/MeanWhile/resources/imgs/ampulheta.png" type="image/ico" />
+        <title>Conecte-se à plataforma MeanWhile</title>
+    </h:head>
+
+    <h:body>
+        <div id="top" class="top">
+            <ui:insert name="cabecalho">
+                <p:panel header="MeanWhile - Chame seus amigos e faça seu evento">  
+                    <h:outputText value="Conecte-se à plataforma MeanWhile"/>
+                </p:panel> 
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left">              
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="conteudo">
+                    <p:panel header="MeanWhile">  
+                        <h:outputText value="Seja Bem vindo!"/>
+                    </p:panel>
+                </ui:insert>
+            </div>
+        </div>
+    </h:body>
+</html>

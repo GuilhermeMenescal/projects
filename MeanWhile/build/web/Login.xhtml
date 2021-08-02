@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template_login.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="conteudo">
+        <p:panel header="Login">
+            <h:form id="frmLogin">  
+               <p:growl id="dados" showDetail="true"/> 
+                <p:panelGrid columns="2">
+                    <p:column>
+                        Email:
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="email" size="30" maxlength="50" value="#{usuarioMB.email}"/>
+                    </p:column>
+                    <p:column>
+                        Senha:
+                    </p:column>
+                    <p:column>
+                        <p:inputText id="senha" size="30" maxlength="50" type="password" value="#{usuarioMB.senha}"/>
+                    </p:column>
+                     <p:column colspan="2">
+                         <p:commandButton value="Entrar" actionListener="#{usuarioMB.login}" update=":frmLogin:email, :frmLogin:senha, :frmLogin:msg"/>
+                    </p:column>
+                    <p:column id="msg">
+                        <c:if test = "${usuarioMB.erro ne null}" >Dados Incorretos ou usuario inexistente</c:if>
+                        <c:if test = "${usuarioMB.erro eq null}" >Seja bem vindo</c:if>
+                    </p:column>
+                </p:panelGrid>
+              </h:form>
+        </p:panel>
+    </ui:define>   
+</ui:composition>

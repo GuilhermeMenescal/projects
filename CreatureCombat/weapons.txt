@@ -1,0 +1,11 @@
+Cebola;9999
+Carrot;20
+Child;40
+Guinsu;200
+Abaco;10
+Hands;50
+Oddjob's Hat;200
+Monocycle;50
+Doritos;15
+The power of friendship;300
+Definitely real candy;300

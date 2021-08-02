@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:define name="conteudo">
+        <p:panel header="Crie seu evento!">
+            <h:form id="frmInicio">  
+               <p:growl id="msgs" showDetail="true"/> 
+                <p:panelGrid columns="2">
+                    <p:column>
+                        Endereço:
+                    </p:column>
+                    <p:column>
+                        <p:inputText size="30" maxlength="50" value="#{eventoMB.endEvento}"/>
+                    </p:column>
+                    <p:column>
+                        Tipo do evento:
+                    </p:column>
+                    <p:column>
+                        <p:selectOneMenu id="cmbTipoEvento" value="#{eventoMB.idtTipo}" effect="fold" editable="false">
+                            <f:selectItem itemLabel="Tipos" itemValue="0" /> 
+                            <f:selectItems value="#{eventoMB.tipoLista}" var="m" itemLabel="#{m.nmeTipoEvento}" itemValue="#{m.idtTipoEvento}"/>  
+                        </p:selectOneMenu>
+                    </p:column>
+                    <p:column>
+                        Data de Inicio:
+                    </p:column>
+                    <p:column>
+                        <p:inputText size="30" maxlength="50" value="#{eventoMB.dataIni}"/>
+                    </p:column>
+                    <p:column>
+                        Data de Fim:
+                    </p:column>
+                    <p:column>
+                        <p:inputText size="30" maxlength="50" value="#{eventoMB.dataFim}"/>
+                    </p:column>
+                    <p:column>
+                        Mínimo de pessoas:
+                    </p:column>
+                    <p:column>
+                        <p:inputText size="30" maxlength="50" value="#{eventoMB.minPessoasEvento}"/>
+                    </p:column>
+                    <p:column>
+                        Máximo de pessoas:
+                    </p:column>
+                    <p:column>
+                        <p:inputText size="30" maxlength="50" value="#{eventoMB.maxPessoasEvento}"/>
+                    </p:column>
+                    <p:column>
+                        Visibilidade do evento:
+                    </p:column>
+                    <p:column>
+                    <p:column colspan="2">
+                         <p:commandButton value="Público" actionListener="#{eventoMB.visiPub}" update=":frmInicio:msgs"/>
+                         <p:commandButton value="Privado" actionListener="#{eventoMB.visiPri}" update=":frmInicio:msgs"/>
+                    </p:column>
+                    </p:column>
+                     <p:column colspan="2">
+                         <p:commandButton value="Criar" actionListener="#{eventoMB.criarEvento}" update=":frmInicio:msgs"/>
+                    </p:column>
+                </p:panelGrid>
+              </h:form>
+        </p:panel>
+    </ui:define>   
+</ui:composition>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matilda's Journal</title>
+
+</head>
+<body>
+    <h1>Welcome to the Journal Publications!</h1>
+
+    {% for publication in publis %}
+        <p>{{publication.title}}</p>
+        <p>{{publication.photo}}</p>
+        <img src = "{% static 'images\{{publication.photo}}' %}">
+        <p>{{publication.description}}</p>
+    {% endfor %}
+</body>
+</html>
